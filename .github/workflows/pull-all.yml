@@ -8,12 +8,13 @@ jobs:
 
     steps:
     - name: case-boost
-      uses: nekiro/ssh-job@main
+      uses: appleboy/ssh-action@v1.0.3
       with:
         host: ${{ secrets.HOST }}
-        key: ${{ secrets.KEY }}
-        user: ${{ secrets.USER }}
-        command: |
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
           cd ~/htdocs/case-boost.com
           git pull
           composer install
