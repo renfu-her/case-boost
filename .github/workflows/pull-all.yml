@@ -1,0 +1,23 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: server 1
+      uses: nekiro/ssh-job@main
+      with:
+        host: ${{ secrets.HOST }}
+        key: ${{ secrets.KEY }}
+        user: ${{ secrets.USER }}
+        command: |
+          cd ~/htdocs/case-boost.com
+          git pull
+          composer install
+          php artisan migrate --force
+          php artisan route:cache
+          php artisan config:cache
+
