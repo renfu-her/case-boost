@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: server 1
+    - name: case-boost
       uses: nekiro/ssh-job@main
       with:
         host: ${{ secrets.HOST }}
