@@ -30,7 +30,7 @@ class ProjectService extends Service
     {
 
         if (empty($this->response)) {
-            $projects = Project::all();
+            $projects = Project::with('user')->get();
             $this->setOk($projects);
         }
 

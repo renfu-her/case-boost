@@ -10,23 +10,46 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
+        'name',
+        'contact_person',
+        'phone',
+        'mobile',
+        'email',
+        'department',
         'title',
         'description',
+        'work_content',
+        'schedule',
+        'location',
         'budget',
-        'remote',
-        'preferred_roles',
+        'notes',
+        'start_date',
+        'inquiry_deadline',
+        'required_skills',
+        'budget_range',
+        'target_audience',
+        'work_location',
+        'status',
+        'experience_years',
+        'issuer_website'
     ];
 
     protected $casts = [
-        'remote' => 'boolean',
-        'preferred_roles' => 'array',
-        'budget' => 'decimal:0'
+        'start_date' => 'date:Y-m-d',
+        'inquiry_deadline' => 'date:Y-m-d',
+        'status' => 'boolean',
+        'experience_years' => 'integer',
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
-
