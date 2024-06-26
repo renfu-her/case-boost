@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Services\API\ProjectService as Service;
 
 class ProjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Project::all();
+        return (new Service($request))
+            ->index()
+            ->getResponse();
     }
 
     public function show(Project $project)

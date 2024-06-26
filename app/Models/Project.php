@@ -16,5 +16,17 @@ class Project extends Model
         'remote',
         'preferred_roles',
     ];
+
+    protected $casts = [
+        'remote' => 'boolean',
+        'preferred_roles' => 'array',
+        'budget' => 'decimal:0'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
 }
 
