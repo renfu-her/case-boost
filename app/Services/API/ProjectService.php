@@ -29,8 +29,11 @@ class ProjectService extends Service
     public function index(): mixed
     {
 
+        $count = $this->request->input('count', 10);
+        $page = $this->request->input('page', 1);
+
         if (empty($this->response)) {
-            $projects = Project::with('user')->get();
+            $projects = Project::with('user')->paginate($count, ['*'], 'page', $page);
             $this->setOk($projects);
         }
 
