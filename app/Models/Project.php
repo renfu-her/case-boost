@@ -52,4 +52,9 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function categories()
+    {
+        return $this->belongsToMany(ProjectCategory::class, 'category_id');
+    }
 }
