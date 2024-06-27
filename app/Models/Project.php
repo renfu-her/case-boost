@@ -50,15 +50,6 @@ class Project extends Model
         'updated_at',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($project) {
-            $project->slug = Str::slug($project->name, '-');
-        });
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
