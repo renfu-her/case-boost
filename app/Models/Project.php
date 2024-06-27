@@ -13,7 +13,6 @@ class Project extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'slug', // 添加 slug 字段
         'contact_person',
         'phone',
         'mobile',
