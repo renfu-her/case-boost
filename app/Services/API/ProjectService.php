@@ -31,9 +31,16 @@ class ProjectService extends Service
 
         $count = $this->request->input('count', 10);
         $page = $this->request->input('page', 1);
+        $category_id = $this->request->input('category_id', '');
 
         if (empty($this->response)) {
-            $projects = Project::with('user')->paginate($count, ['*'], 'page', $page);
+            if (!empty($category_id)) {
+                $projects = Project::where('status', 1)->where('category_id', $category_id)->with('user')->paginate($count, ['*'], 'page', $page);
+                $this->setOk($projects);
+            } else {
+                $projects = Project::where('status', 1)->with('user')->with('user')->paginate($count, ['*'], 'page', $page);
+                $this->setOk($projects);
+            }
             $this->setOk($projects);
         }
 
