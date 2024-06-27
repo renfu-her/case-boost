@@ -10,11 +10,13 @@ class ProjectCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'project_id',
         'name',
         'slug',
         'description',
     ];
 
-
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'category_id');
+    }
 }

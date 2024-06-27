@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Project extends Model
 {
@@ -12,6 +13,7 @@ class Project extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'slug', // 添加 slug 字段
         'contact_person',
         'phone',
         'mobile',
@@ -32,7 +34,8 @@ class Project extends Model
         'work_location',
         'status',
         'experience_years',
-        'issuer_website'
+        'issuer_website',
+        'category_id'
     ];
 
     protected $casts = [
@@ -48,13 +51,22 @@ class Project extends Model
         'updated_at',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($project) {
+            $project->slug = Str::slug($project->name, '-');
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(ProjectCategory::class, 'category_id');
+        return $this->belongsTo(ProjectCategory::class, 'category_id');
     }
 }

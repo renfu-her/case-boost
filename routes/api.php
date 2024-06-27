@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\AuthController;
 
 Route::apiResource('projects', ProjectController::class);
+Route::get('/projects/{slug}', [ProjectController::class, 'showBySlug']);
 
 Route::group(['middleware' => ['guest']], function () {
     Route::post('/login', [AuthController::class, 'login']);

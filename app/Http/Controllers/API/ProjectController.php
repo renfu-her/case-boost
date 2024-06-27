@@ -38,4 +38,10 @@ class ProjectController extends Controller
         $project->delete();
         return response()->json(null, 204);
     }
+
+    public function showBySlug($slug)
+    {
+        $project = Project::where('slug', $slug)->firstOrFail();
+        return response()->json($project);
+    }
 }

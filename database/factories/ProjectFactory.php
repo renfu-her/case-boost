@@ -12,11 +12,9 @@ class ProjectFactory extends Factory
 
     public function definition()
     {
-
         $faker = \Faker\Factory::create('zh_TW');
 
         $target_audience = ['公司', '工作室', '兼職上班族', '學生'];
-        // 隨機取得一組陣列中的值，ex: 公司,學生 | 工作室,兼職上班族 | 公司,學生,工作室，然後是 String
         $target_audience = implode(', ', $faker->randomElements($target_audience, $faker->numberBetween(1, 4)));
 
         $jobTitles = [
@@ -50,6 +48,8 @@ class ProjectFactory extends Factory
             'Laravel專案開發'
         ];
 
+        // 生成 500 到 20000 之间每 500 一个级距的数值数组
+        $budgetOptions = range(500, 20000, 500);
 
         return [
             'user_id' => User::factory(),
@@ -64,7 +64,7 @@ class ProjectFactory extends Factory
             'work_content' => $faker->realText(200, 2),
             'schedule' => $faker->date('Y-m-d'),
             'location' => $faker->address,
-            'budget' => $faker->randomNumber(5),
+            'budget' => $faker->randomElement($budgetOptions),
             'notes' => $faker->sentence,
             'start_date' => $faker->date('Y-m-d'),
             'inquiry_deadline' => $faker->date('Y-m-d'),
@@ -75,6 +75,7 @@ class ProjectFactory extends Factory
             'status' => $faker->boolean,
             'experience_years' => $faker->numberBetween(1, 20),
             'issuer_website' => $faker->url,
+            'category_id' => $faker->numberBetween(1, 7),
         ];
     }
 }
