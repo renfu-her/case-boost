@@ -43,11 +43,11 @@ class Project extends Model
         'status' => 'boolean',
         'experience_years' => 'integer',
         'created_at' => 'datetime:Y-m-d H:i:s',
-        'updated_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d',
     ];
 
     protected $hidden = [
-        'updated_at',
+        'created_at',
     ];
 
     public function user()

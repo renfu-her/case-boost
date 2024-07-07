@@ -4,33 +4,53 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\UserAuthToken;
 use Illuminate\Http\Request;
-use App\Services\API\ProjectService as Service;
 
 class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        return (new Service($request))
-            ->index()
-            ->getResponse();
+        return Project::all();
     }
 
-    public function show(Project $project)
+    public function show($project_id)
     {
-        return $project;
+        return Project::where('id', $project_id)->with('user')->first();
     }
 
     public function store(Request $request)
     {
-        $project = Project::create($request->all());
-        return response()->json($project, 201);
+        $token = $request->input('token');
+        $userAuthToken = UserAuthToken::where('token', $token)->first();
+
+        if ($userAuthToken) {
+            $user_id = $userAuthToken->user_id;
+            $projectData = $request->all();
+            $projectData['user_id'] = $user_id;
+
+            $project = Project::create($projectData);
+            return response()->json($project, 201);
+        } else {
+            return response()->json(['message' => 'Invalid token'], 401);
+        }
     }
 
     public function update(Request $request, Project $project)
     {
-        $project->update($request->all());
-        return response()->json($project, 200);
+        $token = $request->input('token');
+        $userAuthToken = UserAuthToken::where('token', $token)->first();
+
+        if ($userAuthToken) {
+            $user_id = $userAuthToken->user_id;
+            $projectData = $request->all();
+            $projectData['user_id'] = $user_id;
+
+            $project->update($projectData);
+            return response()->json($project, 200);
+        } else {
+            return response()->json(['message' => 'Invalid token'], 401);
+        }
     }
 
     public function destroy(Project $project)
