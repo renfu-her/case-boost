@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserAuthToken;
 
 class UserController extends Controller
 {
@@ -42,4 +43,11 @@ class UserController extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
+
+    public function userInfo($token)
+    {
+        $userAuthToken = UserAuthToken::where('token', $token)->with('user')->first();
+        return response()->json($userAuthToken, 200);
+    }
+
 }

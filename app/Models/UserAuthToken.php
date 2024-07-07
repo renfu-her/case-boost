@@ -14,4 +14,9 @@ class UserAuthToken extends Model
         'token',
         'expires_at'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

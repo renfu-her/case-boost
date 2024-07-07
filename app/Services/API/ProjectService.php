@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\Project;
+use App\Models\UserAuthToken;
 
 class ProjectService extends Service
 {
@@ -31,16 +32,22 @@ class ProjectService extends Service
 
         $count = $this->request->input('count', 10);
         $page = $this->request->input('page', 1);
+        $token = $this->request->input('token', '');
         $category_id = $this->request->input('category_id', '');
 
+        $projects = Project::where('status', 1)->with('user')->orderByDesc('created_at');
+
         if (empty($this->response)) {
-            if (!empty($category_id)) {
-                $projects = Project::where('status', 1)->where('category_id', $category_id)->with('user')->paginate($count, ['*'], 'page', $page);
-                $this->setOk($projects);
-            } else {
-                $projects = Project::where('status', 1)->with('user')->with('user')->paginate($count, ['*'], 'page', $page);
-                $this->setOk($projects);
+            if(!empty($token)){
+                $userAuthToken = UserAuthToken::where('token', $token)->first();
+                $projects = $projects->where('user_id', $userAuthToken->user_id);
             }
+            if (!empty($category_id)) {
+                $projects = $projects->where('category_id', $category_id);
+            } 
+
+            $projects = $projects->paginate($count, ['*'], 'page', $page);
+
             $this->setOk($projects);
         }
 

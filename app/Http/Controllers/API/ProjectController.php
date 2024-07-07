@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\UserAuthToken;
 use Illuminate\Http\Request;
+use App\Services\API\ProjectService as Service;
 
 class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        return Project::all();
+        return (new Service($request))
+            ->index()
+            ->getResponse();
     }
 
     public function show($project_id)
