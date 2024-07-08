@@ -20,6 +20,7 @@ Route::get('/projects/{slug}', [ProjectController::class, 'showBySlug'])->name('
 Route::get('/project-categories', [ProjectCategoryController::class, 'index'])->name('project-categories.index');
 Route::get('/project-categories/{slug}', [ProjectCategoryController::class, 'showBySlug'])->name('project-categories.showBySlug');
 Route::get('/user/info/{token}', [UserController::class, 'userInfo'])->name('userInfo');
+Route::post('/user/info/update/{token}', [UserController::class, 'updateUserInfo'])->name('update.user.info');
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback');
 

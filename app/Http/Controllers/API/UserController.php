@@ -60,4 +60,13 @@ class UserController extends Controller
         return response()->json($userAuthToken, 200);
     }
 
+    public function updateUserInfo(Request $request, $token)
+    {
+        $userAuthToken = UserAuthToken::where('token', $token)->first();
+        $user_id = $userAuthToken->user_id;
+        $user = User::where('id', $user_id)->first();
+        $user->update($request->all());
+        return response()->json($user, 200);
+    }
+
 }
