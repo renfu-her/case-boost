@@ -35,16 +35,22 @@ class ProjectService extends Service
         $token = $this->request->input('token', '');
         $category_id = $this->request->input('category_id', '');
 
-        $projects = Project::where('status', 1)->with('user')->orderByDesc('created_at');
+        $projects = Project::with('user')->orderByDesc('created_at');
 
         if (empty($this->response)) {
-            if(!empty($token)){
+            if (!empty($token)) {
                 $userAuthToken = UserAuthToken::where('token', $token)->first();
                 $projects = $projects->where('user_id', $userAuthToken->user_id);
-            }
-            if (!empty($category_id)) {
-                $projects = $projects->where('category_id', $category_id);
             } 
+            if (!empty($category_id)) {
+                $projects = $projects->where('status', 1)
+                    ->where('category_id', $category_id);
+            }
+
+            if(empty($token) && empty($category_id)){
+                $projects = $projects->where('status', 1);
+            }
+            
 
             $projects = $projects->paginate($count, ['*'], 'page', $page);
 

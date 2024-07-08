@@ -39,21 +39,12 @@ class ProjectController extends Controller
         }
     }
 
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $projectId)
     {
-        $token = $request->input('token');
-        $userAuthToken = UserAuthToken::where('token', $token)->first();
-
-        if ($userAuthToken) {
-            $user_id = $userAuthToken->user_id;
-            $projectData = $request->all();
-            $projectData['user_id'] = $user_id;
-
-            $project->update($projectData);
-            return response()->json($project, 200);
-        } else {
-            return response()->json(['message' => 'Invalid token'], 401);
-        }
+        $project = Project::where('id', $projectId)->first();
+        $projectData = $request->all();
+        $project->update($projectData);
+        return response()->json($project, 200);
     }
 
     public function destroy(Project $project)

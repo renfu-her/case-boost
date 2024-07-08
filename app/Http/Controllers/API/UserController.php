@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAuthToken;
+use App\Services\API\UserService as Service;
+
 
 class UserController extends Controller
 {
@@ -42,6 +44,14 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(null, 204);
+    }
+
+    public function register(Request $request)
+    {
+        return (new Service($request))
+            ->runValidate(['user'])
+            ->register()
+            ->getResponse();
     }
 
     public function userInfo($token)

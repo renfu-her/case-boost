@@ -40,7 +40,6 @@ class Project extends Model
     protected $casts = [
         'start_date' => 'date:Y-m-d',
         'inquiry_deadline' => 'date:Y-m-d',
-        'status' => 'boolean',
         'experience_years' => 'integer',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d',
@@ -59,4 +58,6 @@ class Project extends Model
     {
         return $this->belongsTo(ProjectCategory::class, 'category_id');
     }
+
+    
 }
