@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="icon" href="/logo.png">
     <title>外包接案網</title>
-    <script defer="defer" src="/js/chunk-vendors.307954dc.js"></script>
-    <script defer="defer" src="/js/app.c97c1c3d.js"></script>
-    <link href="/css/chunk-vendors.8a42e1de.css" rel="stylesheet">
-    <link href="/css/app.6d5aeb3a.css" rel="stylesheet">
+    <script defer="defer" src="/js/chunk-vendors.9a6c4bba.js"></script>
+    <script defer="defer" src="/js/app.114f60a4.js"></script>
+    <link href="/css/chunk-vendors.c2b269c0.css" rel="stylesheet">
+    <link href="/css/app.3e4a1887.css" rel="stylesheet">
 </head>
 
 <body><noscript><strong>We're sorry but case-boost-vue doesn't work properly without JavaScript enabled. Please enable
